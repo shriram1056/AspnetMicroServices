@@ -44,3 +44,9 @@ db.Products.find({}).pretty()    // find all with no filter and display in json 
 
 db.Products.remove({})			// remove all
 
+[BsonId]    // the field is Id field
+
+[BsonRepresentation(BsonType.ObjectId)]   // generate r value on insert
+
+[BsonElement("Name")]     // name of field in MONGO
+
