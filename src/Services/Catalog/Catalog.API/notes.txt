@@ -1,0 +1,46 @@
+STRUCTURE:
+
+settings related to url and launch are in Properties/launchSettings.json
+
+add package by right clicking Depenencies and selecting "Add nuget"
+
+
+PACKAGES:
+
+MongoDB.Driver
+
+
+MONGODB:
+
+right click "solution" and click "open in terminal"
+
+docker pull mongo
+
+docker run -d -p 27017:27017 --name shopping-mongo mongo		// create a container and continue using the terminal or shell without being attached to the container's console.
+
+docker run -d -p local_port:image_port
+
+docker ps								// list all running container
+
+docker logs -f shopping-mongo
+
+docker exec -it shopping-mongo command		//  this runs a single command inside the container. each container is a seperate os with linux file system. -i is for providing inputs to the shell in container. -t is emulating a terminal functionalities. 
+
+docker exec -it shopping-mongo /bin/bash	// run the bash executable in /bin to open terminal
+
+mongosh			// goes to mongo-cli
+
+show dbs/databases		// list dbs
+
+show collections		// show collections in the current Db
+
+use database			// switch to this database
+
+db.createCollection('Products')  // create Products collection
+
+db.Products.insertMany([{ 'Name':'Asus Laptop','Category':'Computers', 'Summary':'Summary', 'Description':'Description', 'ImageFile':'ImageFile', 'Price':54.93 }, { 'Name':'HP Laptop','Category':'Computers', 'Summary':'Summary', 'Description':'Description', 'ImageFile':'ImageFile', 'Price':88.93 } ])
+
+db.Products.find({}).pretty()    // find all with no filter and display in json format
+
+db.Products.remove({})			// remove all
+
