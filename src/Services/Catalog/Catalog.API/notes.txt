@@ -4,6 +4,8 @@ settings related to url and launch are in Properties/launchSettings.json
 
 add package by right clicking Depenencies and selecting "Add nuget"
 
+get values in appsettings.json by configuration.GetValue<string>("DatabaseSettings:DatabaseName")
+
 
 PACKAGES:
 

@@ -4,12 +4,12 @@ namespace Catalog.API.Data
 {
     public class CatalogContextSeed
     {
-        public async static void SeedData(IMongoCollection<Product> productCollection)
+        public static void SeedData(IMongoCollection<Product> productCollection)
         {
-            bool existProduct = await productCollection.Find(p => true).AnyAsync();
+            bool existProduct = productCollection.Find(p => true).Any();
             if (!existProduct)
             {
-                await productCollection.InsertManyAsync(GetPreconfiguredProducts());
+                productCollection.InsertManyAsync(GetPreconfiguredProducts());
             }
         }
 
