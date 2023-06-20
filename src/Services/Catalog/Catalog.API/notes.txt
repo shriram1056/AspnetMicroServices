@@ -52,3 +52,34 @@ db.Products.remove({})			// remove all
 
 [BsonElement("Name")]     // name of field in MONGO
 
+
+CONTROLLER:
+
+The [controller] token in the [Route] attribute gets the name of the class by convention-based routing in ASP.NET. When the attribute is applied to a controller class, ASP.NET automatically replaces [controller] with the name of the controller class, but with the "Controller" suffix removed.
+
+By specifying ILogger<CatalogController>, you are indicating that you want to inject an instance of a logger specifically for the CatalogController class.
+
+ActionResult is a base class for the return types of action methods. we use it in the controller to represent the result of an action method execution and encapsulates the data that will be sent back as the HTTP response from the server to the client.
+
+Using ProducesResponseType attribute with typeof(IEnumerable<Product>) provides documentation for the consumers of your API, informing them about the expected response type. 
+
+IEnumerable<Product> is a compile-time construct used for type checking, variable declarations, method signatures, and other static aspects of your code.
+
+By using the typeof operator, we get a Type object containing metadata and information about the type at runtime.
+
+Name attribute in HttpMethod specifies the name of the route. By providing a name, you can refer to this specific route by name elsewhere in your code. For example, it can be useful when generating URLs or performing route-based operations.
+
+If there are multiple http methods then Routes need to be used to specify multiple endpoints.
+
+The [FromBody] is only needed if you're doing an MVC controller. The FromBody attribute is used to bind data from the request body to action method parameters. normally, for post request the data is sent through the body.
+
+
+
+PROGRAM.cs:
+
+When a service is registered with the AddScoped method, a new instance of that service is created once per client request within the scope. 
+
+
+C#:
+
+A nameof function produces the name of a variable, type, or member as the string constant
