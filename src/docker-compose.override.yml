@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  catalogdb:
+    container_name: catalogdb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  catalog.api:
+    container_name: catalog.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=mongodb://catalogdb:27017"
+    depends_on:
+      - catalogdb
+    ports:
+      - "8000:80"
+
+# restart: the container will be automatically restarted if it stops or exits, regardless of the exit status
+
+# depends_on: When one service depends on another service using depends_on, Docker Compose ensures that the dependencies are started before the dependent services.
+
+# environment: When you specify environment variables in the Docker Compose file or when running a Docker container, those environment variables take precedence over the corresponding values specified in appsettings.json.
+
+# ConnectionString: mongodb://host:port, use mongodb protocol and by default no users created. A host name is something that is assigned by a network administrator and, if on the public internet, gets registered and is eventually stored in DNS servers. The IP address can change depending on the type of network. If a public IP address is assigned and then is changed that change is then propagated to the DNS servers to associate the new IP address with the host name using routing protocols. Web browsers interact through Internet Protocol (IP) addresses. DNS translates domain names to IP addresses so browsers can load Internet resources. Localhost is the hostname or the computer that is currently in use to run a program, in which the computer has the role as a virtual server. Docker provides a built-in DNS resolution mechanism that allows containers to communicate with each other using container names as hostnames.

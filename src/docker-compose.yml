@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  catalog.api:
+    image: ${DOCKER_REGISTRY-}catalogapi
+    build:
+      context: .
+      dockerfile: Services/Catalog/Catalog.API/Dockerfile
+
+  catalogdb:
+    image: mongo
+
+volumes:
+  mongo_data:
+  
+# context: defines either a path to a directory containing a Dockerfile, or a URL to a git repository. When the value supplied is a relative path, it MUST be interpreted as relative to the location of the Compose file. 
+
+# In this case, '.' is a relative path representing the current directory where you run docker-compose command and and where Compose can find a Dockerfile and docker-compose.yaml. The Dockerfile can also be elsewhere using the dockerfile keyword 
+
+# DOCKER-REGISTRY can be set in environment variable of the image in docker-compose.override.yml. if not set then, the name is just the string after ${DOCKER_REGISTRY-}
+
+# container name is different from image name

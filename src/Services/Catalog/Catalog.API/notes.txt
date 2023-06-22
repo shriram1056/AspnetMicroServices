@@ -7,9 +7,15 @@ add package by right clicking Depenencies and selecting "Add nuget"
 get values in appsettings.json by configuration.GetValue<string>("DatabaseSettings:DatabaseName")
 
 
+
+
+
 PACKAGES:
 
 MongoDB.Driver
+
+
+
 
 
 MONGODB:
@@ -18,7 +24,7 @@ right click "solution" and click "open in terminal"
 
 docker pull mongo
 
-docker run -d -p 27017:27017 --name shopping-mongo mongo		// create a container and continue using the terminal or shell without being attached to the container's console.
+docker run -d -p 27017:27017 --name shopping-mongo mongo		// -d create a container and continue using the terminal or shell without being attached to the container's console.
 
 docker run -d -p local_port:image_port
 
@@ -53,6 +59,8 @@ db.Products.remove({})			// remove all
 [BsonElement("Name")]     // name of field in MONGO
 
 
+
+
 CONTROLLER:
 
 The [controller] token in the [Route] attribute gets the name of the class by convention-based routing in ASP.NET. When the attribute is applied to a controller class, ASP.NET automatically replaces [controller] with the name of the controller class, but with the "Controller" suffix removed.
@@ -75,11 +83,41 @@ The [FromBody] is only needed if you're doing an MVC controller. The FromBody at
 
 
 
+
+
 PROGRAM.cs:
 
 When a service is registered with the AddScoped method, a new instance of that service is created once per client request within the scope. 
 
 
+
+
 C#:
 
 A nameof function produces the name of a variable, type, or member as the string constant
+
+
+
+DOCKER:
+
+https://stackoverflow.com/questions/53332539/why-do-we-build-and-publish-as-two-steps-when-publish-also-builds
+
+docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
+
+-f: flag to specify the location of a Compose configuration file.
+
+up: command starts the services defined in the Compose files.
+
+-d: This option runs the containers in detached mode, which means they will run in the background and won't occupy the console.
+
+right click Catalog.API and select Add> "containerization orchestration support" to get auto-generated docker file and compose. 
+
+dotnet publish automatically does everything dotnet build already does
+
+All you really need to understand to be able to successfully publish and deploy is that you need to dotnet publish
+
+an app host refers to a small native executable that acts as the entry point for running .NET applications, we don't need that because it bloats and we run the .dll directly because of the .net runtime in the container.
+
+Final Stage: Typically, the last build stage is used as the final stage, where you include only the necessary artifacts required to run your application. This final stage often uses a lightweight base image, such as an official runtime image, to minimize the image size and remove unnecessary build dependencies.
+
+Discarding Intermediary Stages: The intermediate stages created during the build process are discarded after their artifacts have been copied into subsequent stages. This means that only the final stage artifacts remain in the resulting Docker image, reducing the overall size.
