@@ -13,7 +13,7 @@ services:
     container_name: catalog.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "DatabaseSettings:ConnectionString=mongodb://catalogdb:27017"
+      - "DatabaseSettings__ConnectionString=mongodb://catalogdb:27017"
     depends_on:
       - catalogdb
     ports:
@@ -26,3 +26,13 @@ services:
 # environment: When you specify environment variables in the Docker Compose file or when running a Docker container, those environment variables take precedence over the corresponding values specified in appsettings.json.
 
 # ConnectionString: mongodb://host:port, use mongodb protocol and by default no users created. A host name is something that is assigned by a network administrator and, if on the public internet, gets registered and is eventually stored in DNS servers. The IP address can change depending on the type of network. If a public IP address is assigned and then is changed that change is then propagated to the DNS servers to associate the new IP address with the host name using routing protocols. Web browsers interact through Internet Protocol (IP) addresses. DNS translates domain names to IP addresses so browsers can load Internet resources. Localhost is the hostname or the computer that is currently in use to run a program, in which the computer has the role as a virtual server. Docker provides a built-in DNS resolution mechanism that allows containers to communicate with each other using container names as hostnames.
+
+#dotnet publish automatically does everything dotnet build already does
+
+#All you really need to understand to be able to successfully publish and deploy is that you need to dotnet publish
+
+#an app host refers to a small native executable that acts as the entry point for running .NET applications, we don't need that because it bloats and we run the .dll directly because of the .net runtime in the container.
+
+#Final Stage: Typically, the last build stage is used as the final stage, where you include only the necessary artifacts required to run your application. This final stage often uses a lightweight base image, such as an official runtime image, to minimize the image size and remove unnecessary build dependencies.
+
+#Discarding Intermediary Stages: The intermediate stages created during the build process are discarded after their artifacts have been copied into subsequent stages. This means that only the final stage artifacts remain in the resulting Docker image, reducing the overall size.

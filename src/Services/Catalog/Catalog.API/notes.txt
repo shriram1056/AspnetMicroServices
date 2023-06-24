@@ -8,13 +8,9 @@ get values in appsettings.json by configuration.GetValue<string>("DatabaseSettin
 
 
 
-
-
 PACKAGES:
 
 MongoDB.Driver
-
-
 
 
 
@@ -25,6 +21,8 @@ right click "solution" and click "open in terminal"
 docker pull mongo
 
 docker run -d -p 27017:27017 --name shopping-mongo mongo		// -d create a container and continue using the terminal or shell without being attached to the container's console.
+
+docker run -d -p 3000:3000 mongoclient/mongoclient  // for debugging in mongo db in UI
 
 docker run -d -p local_port:image_port
 
@@ -102,6 +100,8 @@ DOCKER:
 
 https://stackoverflow.com/questions/53332539/why-do-we-build-and-publish-as-two-steps-when-publish-also-builds
 
+1. command to create and run the container?
+
 docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
 
 -f: flag to specify the location of a Compose configuration file.
@@ -110,14 +110,55 @@ up: command starts the services defined in the Compose files.
 
 -d: This option runs the containers in detached mode, which means they will run in the background and won't occupy the console.
 
+
+2. command to stop and remove the container?
+
+docker-compose -f docker-compose.yml -f docker-compose.override.yml down
+
+used to stop and remove the containers defined in the Docker Compose configuration files.
+
+
+3. how to build a docker image?
+
+docker build -t aspnetapp . 
+
+builds a Docker image with the name "aspnetapp" using the Dockerfile and other required files present in the current directory.
+
+
+4. how to add containerization support""
+
 right click Catalog.API and select Add> "containerization orchestration support" to get auto-generated docker file and compose. 
 
-dotnet publish automatically does everything dotnet build already does
+set everything to "false" except for remove in tool > docker compose for faster build
 
-All you really need to understand to be able to successfully publish and deploy is that you need to dotnet publish
 
-an app host refers to a small native executable that acts as the entry point for running .NET applications, we don't need that because it bloats and we run the .dll directly because of the .net runtime in the container.
+5. how does selecting docker-compose profile change managing the code base?
 
-Final Stage: Typically, the last build stage is used as the final stage, where you include only the necessary artifacts required to run your application. This final stage often uses a lightweight base image, such as an official runtime image, to minimize the image size and remove unnecessary build dependencies.
+when you build or clean the solution while the "docker-compose" profile selected, then the docker containers will built or cleaned 
 
-Discarding Intermediary Stages: The intermediate stages created during the build process are discarded after their artifacts have been copied into subsequent stages. This means that only the final stage artifacts remain in the resulting Docker image, reducing the overall size.
+
+6. how can i you set breakpoints and debug code once the code runs in the container?
+
+we can set breakpoints to debug things, when we run the app in "Debug" mode
+
+if you select docker-compose profile and click run, then there will a container tab and output > Debug for build details.
+
+Debug: The Debug configuration is intended for development and testing purposes. It includes additional debugging information in the compiled code, such as symbols and metadata, to facilitate debugging and enable features like breakpoints, stepping through code, and inspecting variables. It typically has optimizations disabled to make the debugging experience easier. when in "Debug" mode, the .net image with dev tag is used
+
+Release: The Release configuration is optimized for the final deployment of the software. It is focused on generating a smaller and faster executable file by enabling various compiler optimizations. Debugging information is usually stripped from the compiled code to reduce its size and improve performance. when in "Release" mode, the .net image with latest tag is used
+
+
+logs for the container are in container tab
+
+
+6. how is visual studio able to debug built code?
+
+Here's an overview of how Visual Studio is able to debug built code:
+
+Debug Symbols (PDB Files): During the build process, Visual Studio generates Debug symbols, also known as Program Database (PDB) files. These files contain additional information about the compiled code, such as function names, variable names, and line number mappings.
+
+Just-In-Time (JIT) Debugging: Visual Studio uses Just-In-Time (JIT) debugging to attach to a running process when debugging built code.
+
+6. why can't you connect to mongodb in docker?
+
+use __ to show nesting in docker compose for connection string instead of :, it seems like : can only be used in windows and the container is linux
