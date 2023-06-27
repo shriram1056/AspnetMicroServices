@@ -1,3 +1,12 @@
+#C:
+
+computed properties should only have getters but no setters
+
+When an object is deserialized using a JSON serializer like Newtonsoft.Json (also known as Json.NET), the computed properties are typically not recalculated.
+
+When you send a POST request to your API endpoint with a JSON payload containing Value1 and Value2, the ASP.NET Core framework will automatically bind the JSON data to an instance of the MyModel class. The computed property, ComputedProperty, will be calculated based on the provided values
+
+
 Redis:
 
 docker pull redis

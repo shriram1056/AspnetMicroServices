@@ -28,5 +28,7 @@ namespace Basket.API.Entities
                 return totalprice;
             }
         }
+        // computed properties should only have getters but no setters
+
     }
 }

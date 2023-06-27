@@ -23,11 +23,14 @@ namespace Basket.API.Repositories
                 return null;
 
             return JsonConvert.DeserializeObject<ShoppingCart>(basket);
+            // When an object is deserialized using a JSON serializer like Newtonsoft.Json (also known as Json.NET), the computed properties are typically not recalculated.
         }
 
         public async Task<ShoppingCart> UpdateBasket(ShoppingCart basket)
-        {
+        { // computed values are created on from the post body
+
             await _redisCache.SetStringAsync(basket.UserName, JsonConvert.SerializeObject(basket));
+            // By default a type's properties are serialized in opt-out mode. What that means is that all public fields and properties with getters are automatically serialized to JSON, and fields https://github.com/JamesNK/Newtonsoft.Json/issues/2037
 
             return await GetBasket(basket.UserName);
         }
