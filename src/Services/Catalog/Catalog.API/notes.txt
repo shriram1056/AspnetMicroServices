@@ -12,6 +12,8 @@ PACKAGES:
 
 MongoDB.Driver
 
+Microsoft.VisualStudio.Azure.Containers.Tools.Targets // adds automatically when container support enabled
+
 
 
 MONGODB:
@@ -151,7 +153,7 @@ Release: The Release configuration is optimized for the final deployment of the 
 logs for the container are in container tab
 
 
-6. how is visual studio able to debug built code?
+7. how is visual studio able to debug built code?
 
 Here's an overview of how Visual Studio is able to debug built code:
 
@@ -159,6 +161,17 @@ Debug Symbols (PDB Files): During the build process, Visual Studio generates Deb
 
 Just-In-Time (JIT) Debugging: Visual Studio uses Just-In-Time (JIT) debugging to attach to a running process when debugging built code.
 
-6. why can't you connect to mongodb in docker?
 
-use __ to show nesting in docker compose for connection string instead of :, it seems like : can only be used in windows and the container is linux
+8. why can't you connect to mongodb in docker?
+
+use __ to show nesting in docker compose for connection string instead of :, it seems like : can only be used in windows and the container is linux.
+
+
+9. does .NET automatically convert .Net Object to JSON?
+
+when working with MongoDB and the .NET driver, the driver automatically handles the conversion between .NET objects and BSON (Binary JSON), which is the native data format used by MongoDB.
+
+
+10. does Mongo Db automatically convert .Net Object to BSON?
+
+when working with MongoDB and the .NET driver, the driver automatically handles the conversion between .NET objects and BSON (Binary JSON), which is the native data format used by MongoDB.

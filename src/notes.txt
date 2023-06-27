@@ -1,0 +1,53 @@
+Redis:
+
+docker pull redis
+
+docker run -d -p 6379:6379 --name aspnet-redis redis
+
+docker logs -f aspnet-redis
+
+docker exec -it aspnet-redis /bin/bash
+
+redis-cli
+
+set key value
+
+get key -> "value"
+
+set name shriram
+
+get name -> "shriram"
+
+
+
+
+Packages:
+
+Newtonsoft.json			// conversion between language-specific object and JSON
+
+Microsoft.Extensions.Caching.StackExchangeRedis
+
+
+Program.cs:
+
+Microsoft.Extensions.Caching.StackExchangeRedis is for adding a redis client in a class via DI so that we don't have to create a client with connection string in each class and get it using IDistributedCache interface which is common interface for caching in Microsoft.Extensions.Caching for any caching provider
+
+
+
+1. Why did we need JSON?
+
+JSON (JavaScript Object Notation) was developed as a data interchange format to address the need for a lightweight, human-readable, and language-independent way to exchange data between systems
+
+The keys can also be any valid string. The JSON values can only be one of the six datatypes (strings, numbers, objects, arrays, Boolean, null). JavaScript values on the other hand can be any valid JavaScript Structure.
+
+2. the Reason for using redis?
+
+The basket API is used and updated often and we need a distributed cache. distributed cache is a cache shared by multiple app servers, typically maintained as an external service to the app servers that access it
+
+3. why convert .NET object to JSON before storing in redis?
+
+StackExchange stores data into Redis sending/retrieving a byte[] or so, whatever you are storing into Redis must be converted into a byte[] (string is automatically converted by StackExchange.Redis implementation so we don't have to do it).  
+
+StackExchange does not support all the data types and features of Redis. It only supports reading and writing byte arrays.
+
+https://duongnt.com/stackexchangeredis/
