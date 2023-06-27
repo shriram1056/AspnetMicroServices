@@ -20,6 +20,8 @@ services:
     image: redis:alpine  
     # alpine is lightweight
   
+  portainer:
+    image: portainer/portainer-ce
 
 
 volumes:
