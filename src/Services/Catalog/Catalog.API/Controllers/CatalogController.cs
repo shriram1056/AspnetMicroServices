@@ -4,6 +4,8 @@ using Catalog.API.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
+// the framework automatically handles the serialization of your response objects to JSON. You can simply return the .NET object from your GET method, and the framework will take care of serializing it to JSON before sending the response back to the client.
+
 namespace Catalog.API.Controllers
 {
     [ApiController]
@@ -27,7 +29,6 @@ namespace Catalog.API.Controllers
             return Ok(products);
         }
 
-        // the framework automatically handles the serialization of your response objects to JSON. You can simply return the .NET object from your GET method, and the framework will take care of serializing it to JSON before sending the response back to the client.
 
         [HttpGet("{id:length(24)}", Name = "GetProduct")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
