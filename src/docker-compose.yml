@@ -7,11 +7,26 @@ services:
       context: .
       dockerfile: Services/Catalog/Catalog.API/Dockerfile
 
+  basket.api:
+    image: ${DOCKER_REGISTRY-}basketapi
+    build:
+      context: .
+      dockerfile: Services/Basket/Basket.API/Dockerfile
+  
   catalogdb:
     image: mongo
 
+  basketdb:
+    image: redis:alpine  
+    # alpine is lightweight
+  
+  portainer:
+    image: portainer/portainer-ce
+
+
 volumes:
   mongo_data:
+  portainer_data:
   
 # context: defines either a path to a directory containing a Dockerfile, or a URL to a git repository. When the value supplied is a relative path, it MUST be interpreted as relative to the location of the Compose file. 
 

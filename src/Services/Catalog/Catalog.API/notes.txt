@@ -15,6 +15,10 @@ MongoDB.Driver
 Microsoft.VisualStudio.Azure.Containers.Tools.Targets // adds automatically when container support enabled
 
 
+Container:
+
+docker run -d -p 3000:3000 mongoclient/mongoclient  // for debugging in mongo db in UI
+
 
 MONGODB:
 
@@ -23,8 +27,6 @@ right click "solution" and click "open in terminal"
 docker pull mongo
 
 docker run -d -p 27017:27017 --name shopping-mongo mongo		// -d create a container and continue using the terminal or shell without being attached to the container's console.
-
-docker run -d -p 3000:3000 mongoclient/mongoclient  // for debugging in mongo db in UI
 
 docker run -d -p local_port:image_port
 
