@@ -3,3 +3,25 @@
 Dapper
 
 NpgSQL
+
+
+
+Dapper:
+
+Dapper is an open-source object-relational mapping (ORM) library for .NET and .NET Core applications.
+
+Dapper allows you to execute raw SQL queries, map the results to objects, and execute stored procedures, among other things.
+
+Dapper adds extension methods like QueryAsync on the connection object NpgsqlConnection.
+
+ORM stands for Object Relational Mapping, meaning the entire database can be operated in terms of OO classes, Interfaces etc. ORM creates a "virtual database" in terms of classes and provides methods to work with those classes.
+
+
+
+
+Program.cs:
+
+AddTransient: when NpgsqlConnection is registered with the AddTransient method, which means that a new instance will be created every time it is requested from the DI container. whenever an instance of MyController is created, a new instance of NpgsqlConnection will be injected. When an incoming HTTP request matches a route defined in your application, the framework identifies the associated controller and creates a new instance of it.
+
+
+Addscoped: When the NpgsqlConnection is registered with the AddScoped method, which means that the same instance will be used throughout the duration of a single request. Each time an HTTP request is made that involves MyController, the same instance of NpgsqlConnection will be provided.

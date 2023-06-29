@@ -1,53 +1,134 @@
-Redis:
+#C:
 
-docker pull redis
+computed properties should only have getters but no setters
 
-docker run -d -p 6379:6379 --name aspnet-redis redis
+When an object is deserialized using a JSON serializer like Newtonsoft.Json (also known as Json.NET), the computed properties are typically not recalculated.
 
-docker logs -f aspnet-redis
+When you send a POST request to your API endpoint with a JSON payload containing Value1 and Value2, the ASP.NET Core framework will automatically bind the JSON data to an instance of the MyModel class. The computed property, ComputedProperty, will be calculated based on the provided values
 
-docker exec -it aspnet-redis /bin/bash
-
-redis-cli
-
-set key value
-
-get key -> "value"
-
-set name shriram
-
-get name -> "shriram"
+A nameof function produces the name of a variable, type, or member as the string constant
 
 
 
+STRUCTURE:
 
-Packages:
+settings related to url and launch are in Properties/launchSettings.json
 
-Newtonsoft.json			// conversion between language-specific object and JSON
-
-Microsoft.Extensions.Caching.StackExchangeRedis
-
-
-Program.cs:
-
-Microsoft.Extensions.Caching.StackExchangeRedis is for adding a redis client in a class via DI so that we don't have to create a client with connection string in each class and get it using IDistributedCache interface which is common interface for caching in Microsoft.Extensions.Caching for any caching provider
+add package by right clicking Depenencies on the solution and selecting "Add nuget"
 
 
 
-1. Why did we need JSON?
+PROGRAM.cs:
 
-JSON (JavaScript Object Notation) was developed as a data interchange format to address the need for a lightweight, human-readable, and language-independent way to exchange data between systems
+When a service is registered with the AddScoped method, a new instance of that service is created once per client request within the scope. 
 
-The keys can also be any valid string. The JSON values can only be one of the six datatypes (strings, numbers, objects, arrays, Boolean, null). JavaScript values on the other hand can be any valid JavaScript Structure.
+get values in appsettings.json by configuration.GetValue<string>("DatabaseSettings:DatabaseName")
 
-2. the Reason for using redis?
 
-The basket API is used and updated often and we need a distributed cache. distributed cache is a cache shared by multiple app servers, typically maintained as an external service to the app servers that access it
 
-3. why convert .NET object to JSON before storing in redis?
+AddTransient: when NpgsqlConnection is registered with the AddTransient method, which means that a new instance will be created every time it is requested from the DI container. whenever an instance of MyController is created, a new instance of NpgsqlConnection will be injected. When an incoming HTTP request matches a route defined in your application, the framework identifies the associated controller and creates a new instance of it.
 
-StackExchange stores data into Redis sending/retrieving a byte[] or so, whatever you are storing into Redis must be converted into a byte[] (string is automatically converted by StackExchange.Redis implementation so we don't have to do it).  
 
-StackExchange does not support all the data types and features of Redis. It only supports reading and writing byte arrays.
+Addscoped: When the NpgsqlConnection is registered with the AddScoped method, which means that the same instance will be used throughout the duration of a single request. Each time an HTTP request is made that involves MyController, the same instance of NpgsqlConnection will be provided.
 
-https://duongnt.com/stackexchangeredis/
+AddScoped<IInterface,IObject>
+AddScoped<IInterface>((sq) => new IObject)
+
+// https://lesjackson.net/path-player?courseid=dotnet-developer-toolkit&unit=62490193b4325c1d0a708144Unit
+
+
+CONTROLLER:
+
+The [controller] token in the [Route] attribute gets the name of the class by convention-based routing in ASP.NET. When the attribute is applied to a controller class, ASP.NET automatically replaces [controller] with the name of the controller class, but with the "Controller" suffix removed.
+
+By specifying ILogger<CatalogController>, you are indicating that you want to inject an instance of a logger specifically for the CatalogController class.
+
+ActionResult is a base class for the return types of action methods. we use it in the controller to represent the result of an action method execution and encapsulates the data that will be sent back as the HTTP response from the server to the client.
+
+Using ProducesResponseType attribute with typeof(IEnumerable<Product>) provides documentation for the consumers of your API, informing them about the expected response type. 
+
+IEnumerable<Product> is a compile-time construct used for type checking, variable declarations, method signatures, and other static aspects of your code.
+
+By using the typeof operator, we get a Type object containing metadata and information about the type at runtime.
+
+Name attribute in HttpMethod specifies the name of the route. By providing a name, you can refer to this specific route by name elsewhere in your code. For example, it can be useful when generating URLs or performing route-based operations.
+
+If there are multiple http methods then Routes need to be used to specify multiple endpoints.
+
+The [FromBody] is only needed if you're doing an MVC controller. The FromBody attribute is used to bind data from the request body to action method parameters. normally, for post request the data is sent through the body.
+
+
+
+
+DOCKER:
+
+https://stackoverflow.com/questions/53332539/why-do-we-build-and-publish-as-two-steps-when-publish-also-builds
+
+1. command to create and run the container?
+
+docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
+
+-f: flag to specify the location of a Compose configuration file.
+
+up: command starts the services defined in the Compose files.
+
+-d: This option runs the containers in detached mode, which means they will run in the background and won't occupy the console.
+
+
+2. command to stop and remove the container?
+
+docker-compose -f docker-compose.yml -f docker-compose.override.yml down
+
+used to stop and remove the containers defined in the Docker Compose configuration files.
+
+
+3. how to build a docker image?
+
+docker build -t aspnetapp . 
+
+builds a Docker image with the name "aspnetapp" using the Dockerfile and other required files present in the current directory.
+
+
+4. how to add containerization support""
+
+right click Catalog.API and select Add> "containerization orchestration support" to get auto-generated docker file and compose. 
+
+set everything to "false" except for remove in tool > docker compose for faster build
+
+
+5. how does selecting docker-compose profile change managing the code base?
+
+when you build or clean the solution while the "docker-compose" profile selected, then the docker containers will built or cleaned 
+
+
+6. how can i you set breakpoints and debug code once the code runs in the container?
+
+we can set breakpoints to debug things, when we run the app in "Debug" mode
+
+if you select docker-compose profile and click run, then there will a container tab and output > Debug for build details.
+
+Debug: The Debug configuration is intended for development and testing purposes. It includes additional debugging information in the compiled code, such as symbols and metadata, to facilitate debugging and enable features like breakpoints, stepping through code, and inspecting variables. It typically has optimizations disabled to make the debugging experience easier. when in "Debug" mode, the .net image with dev tag is used
+
+Release: The Release configuration is optimized for the final deployment of the software. It is focused on generating a smaller and faster executable file by enabling various compiler optimizations. Debugging information is usually stripped from the compiled code to reduce its size and improve performance. when in "Release" mode, the .net image with latest tag is used
+
+
+logs for the container are in container tab
+
+
+7. how is visual studio able to debug built code?
+
+Here's an overview of how Visual Studio is able to debug built code:
+
+Debug Symbols (PDB Files): During the build process, Visual Studio generates Debug symbols, also known as Program Database (PDB) files. These files contain additional information about the compiled code, such as function names, variable names, and line number mappings.
+
+Just-In-Time (JIT) Debugging: Visual Studio uses Just-In-Time (JIT) debugging to attach to a running process when debugging built code.
+
+
+8. why can't you connect to mongodb in docker?
+
+use __ to show nesting in docker compose for connection string instead of :, it seems like : can only be used in windows and the container is linux.
+
+
+9. does .NET automatically convert .Net Object to JSON?
+
+when working with MongoDB and the .NET driver, the driver automatically handles the conversion between .NET objects and BSON (Binary JSON), which is the native data format used by MongoDB.
