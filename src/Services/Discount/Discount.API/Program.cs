@@ -1,3 +1,4 @@
+using Discount.API.Repositories;
 using Npgsql;
 using System.Data;
 
@@ -9,7 +10,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddTransient<IDbConnection>((sp) => new NpgsqlConnection("DatabaseSettings:ConnectionString"));
+builder.Services.AddTransient<IDbConnection>((sp) => new NpgsqlConnection(builder.Configuration.GetValue<string>("DatabaseSettings:ConnectionString")));
+builder.Services.AddScoped<IDiscountRepository, DiscountRepository>();
 
 var app = builder.Build();
 

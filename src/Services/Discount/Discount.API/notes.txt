@@ -25,3 +25,19 @@ AddTransient: when NpgsqlConnection is registered with the AddTransient method, 
 
 
 Addscoped: When the NpgsqlConnection is registered with the AddScoped method, which means that the same instance will be used throughout the duration of a single request. Each time an HTTP request is made that involves MyController, the same instance of NpgsqlConnection will be provided.
+
+
+
+query into DB in pgadmin container:
+
+Database > DiscountDb > Schemas > Table, click on this in sidebar and go to tools > query tool at top nav 
+
+
+
+SQL:
+
+CREATE TABLE Coupon(Id SERIAL PRIMARY KEY NOT NULL, ProductName VARCHAR(24) NOT NULL, 
+					Description TEXT,
+                    Amount INT);
+
+SERIAL: a data type that stores a sequential integer, of the INT data type, that is automatically assigned by the database server when a new row is inserted.

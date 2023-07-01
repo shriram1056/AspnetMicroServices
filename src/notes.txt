@@ -132,3 +132,7 @@ use __ to show nesting in docker compose for connection string instead of :, it 
 9. does .NET automatically convert .Net Object to JSON?
 
 when working with MongoDB and the .NET driver, the driver automatically handles the conversion between .NET objects and BSON (Binary JSON), which is the native data format used by MongoDB.
+
+10. why is the port of api container always 80?
+
+it is because that is the default container port in dockerfile.

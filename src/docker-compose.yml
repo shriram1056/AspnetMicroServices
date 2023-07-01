@@ -30,6 +30,12 @@ services:
     image: portainer/portainer-ce
 
 
+  discount.api:
+    image: ${DOCKER_REGISTRY-}discountapi
+    build:
+      context: .
+      dockerfile: Services/Discount/Discount.API/Dockerfile
+
 volumes:
   mongo_data:
   portainer_data:
@@ -44,3 +50,4 @@ volumes:
 # DOCKER-REGISTRY can be set in environment variable of the image in docker-compose.override.yml. if not set then, the name is just the string after ${DOCKER_REGISTRY-}
 
 # container name is different from image name
+
