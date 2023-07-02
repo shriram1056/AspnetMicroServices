@@ -97,9 +97,3 @@ services:
 #Final Stage: Typically, the last build stage is used as the final stage, where you include only the necessary artifacts required to run your application. This final stage often uses a lightweight base image, such as an official runtime image, to minimize the image size and remove unnecessary build dependencies.
 
 #Discarding Intermediary Stages: The intermediate stages created during the build process are discarded after their artifacts have been copied into subsequent stages. This means that only the final stage artifacts remain in the resulting Docker image, reducing the overall size.
-  discount.api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "80"
-

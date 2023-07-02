@@ -1,3 +1,4 @@
+using Discount.API.Extensions;
 using Discount.API.Repositories;
 using Npgsql;
 using System.Data;
@@ -14,6 +15,9 @@ builder.Services.AddTransient<IDbConnection>((sp) => new NpgsqlConnection(builde
 builder.Services.AddScoped<IDiscountRepository, DiscountRepository>();
 
 var app = builder.Build();
+
+app.MigrateDatabase<Program>();
+// WebApplication type extends IHost
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
