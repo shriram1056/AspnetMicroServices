@@ -1,70 +1,110 @@
-﻿ remove HTTPS and modify HTTP:
-
-	right click solution, select properties, go to debug section, remove the https URL and modify http URL of launch profiles.
+﻿C#:
 
 
+The first parameter of the extension method specifies the type being extended and should be preceded by the "this" keyword. This parameter indicates the instance on which the extension method is called. example in Discount.API/Extensions
 
-Network latency is the amount of time it takes for a data packet to go from one place to another.
-
-most communication in backend is asynchronous and some calls are synchronous and GRPC should be used for such communication. 
-
-gRPC (Google Remote Procedure Call) is an open-source high-performance framework developed by Google for building distributed systems. It enables communication between services across different languages and platforms by using a language-agnostic, platform-neutral protocol called Protocol Buffers (protobuf) for data serialization.
-
-In microservices architecture, where applications are split into small, independently deployable services, communication between these services becomes crucial. Traditional approaches like using RESTful APIs or message queues have certain limitations, such as higher latency, overhead in data serialization/deserialization, and lack of strong typing. gRPC addresses these challenges by providing the following benefits:
-
-synchronous backend communication: gRPC uses HTTP/2, a modern transport protocol that supports bidirectional streaming, multiplexing, and header compression. This allows for efficient communication between services with lower latency and reduced network overhead.
-
-Strong Typing: With gRPC, you define your service interfaces using Protocol Buffers, which is a language-agnostic interface definition language (IDL).
-
-Code Generation: gRPC leverages Protocol Buffers to generate client and server code in various programming languages. This code generation simplifies service integration by providing a convenient API that abstracts away the underlying network communication. Clients can make remote procedure calls to services as if they were local function invocations.
-
-Bi-directional Streaming
-
-GRPC message are smaller than JSON
+optional parameter can be specified by ? preceded by type of parameter
 
 
 
-grpc stub classes:
+Q. what is object initializer?
 
- the "gRPC stub classes" refer to the client-side code that is generated from the .proto file when using the gRPC framework. These stub classes encapsulate the network communication and serialization/deserialization logic necessary to communicate with the gRPC server.
+using var command = new NpgsqlCommand
+{
+    Connection = (NpgsqlConnection)dbConnection
+};
+
+initialize Connection property of the NpgsqlCommand during object creation.
 
 
+Q. what is "using" directive?
 
-greet.proto:
+syntax 1:
 
-	a Protocol Buffers (protobuf) file, the gRPC service "Greeter" is defined using the protobuf syntax. It has one RPC (Remote Procedure Call) method called "SayHello", which takes an input message of type "HelloRequest" and returns a response message of type "HelloReply". Both "HelloRequest" and "HelloReply" are also defined as message types in the protobuf file.
+await using (var resource = new AsyncDisposableExample())
+{
+    // Use the resource
+}
 
-	right click greet.proto and select properties, we can select what code should be generated in "grpc stub class" field:
+When the control leaves the block of the using statement, an acquired IDisposable instance is disposed.
 
-	Generate client code: This option allows you to control whether the client-side code should be generated. If enabled, the gRPC stub classes will be generated.
 
-	Generate server code: Similarly, this option controls the generation of server-side code if you have defined gRPC services on the server.
+syntax 2:
+
+using StreamReader reader = File.OpenText(filePath);
+
+You can use a "using" declaration that doesn't require braces, in that case a local variable is disposed at the end of the scope in which it's declared. 
 
 
 
 
-GreeterService.cs:
 
-	the gRPC service implementation for the "Greeter" service is provided. The class "GreeterService" extends the generated base class "Greeter.GreeterBase" (which is generated from the protobuf definition) and overrides the "SayHello" method. Inside the overridden method, it creates a new instance of the "HelloReply" message and sets its "Message" property to "Hello" concatenated with the name received in the "HelloRequest" message. The implementation uses the provided logger to log information.
+Packages:
+
+Dapper
+
+NpgSQL
+
+AutoMapper.Extensions.Microsoft.DependencyInjection
 
 
-GreeterBase:
+AutoMapper for mapping from grpc type to Db Type and reverse
 
-is the server code of the grpc, that we can use to implement grpc methods
+so on the root directory of our application we need to create a folder called Profile. 
+
+
+
+Dapper:
+
+Dapper is an open-source object-relational mapping (ORM) library for .NET and .NET Core applications.
+
+Dapper allows you to execute raw SQL queries, map the results to objects, and execute stored procedures, among other things.
+
+Dapper adds extension methods like QueryAsync on the connection object NpgsqlConnection.
+
+ORM stands for Object Relational Mapping, meaning the entire database can be operated in terms of OO classes, Interfaces etc. ORM creates a "virtual database" in terms of classes and provides methods to work with those classes.
+
+Dapper handles the opening and closing of the connection automatically for you when you call its methods.
+
+
+
+NpgsqlConnection:
+
+ExecuteNonQuery: It allows you to execute a command against the database and obtain the number of rows affected by the operation, without returning any actual data.
 
 
 
 Program.cs:
 
-	UseEndpoints method is used to map the GreeterService (which is the implementation class from your first file) as a gRPC service endpoint.
-
-	AddGrpc adds services to the container, dependencies and middlewares
+AddTransient: when NpgsqlConnection is registered with the AddTransient method, which means that a new instance will be created every time it is requested from the DI container. whenever an instance of MyController is created, a new instance of NpgsqlConnection will be injected. When an incoming HTTP request matches a route defined in your application, the framework identifies the associated controller and creates a new instance of it.
 
 
+Addscoped: When the NpgsqlConnection is registered with the AddScoped method, which means that the same instance will be used throughout the duration of a single request. Each time an HTTP request is made that involves MyController, the same instance of NpgsqlConnection will be provided.
 
-Discount.Grpc.csproj:
 
-	you can change if the Grpc Service is client or server
 
+query into DB in pgadmin container:
+
+Database > DiscountDb > Schemas > Table, click on this in sidebar and go to tools > query tool at top nav 
+
+
+
+SQL:
+
+CREATE TABLE Coupon(Id SERIAL PRIMARY KEY NOT NULL, ProductName VARCHAR(24) NOT NULL, 
+					Description TEXT,
+                    Amount INT);
+
+SERIAL: a data type that stores a sequential integer, of the INT data type, that is automatically assigned by the database server when a new row is inserted.
+
+
+
+1. Why do i need to explicitly call the Open method in HostExtension but not call it when using dapper methods?
+
+dapper handles opening and closing the connection.
+
+2. what is the reason for name of ExecuteNonQuery method in NpgsqlConnection?
+
+The term "non-query" refers to SQL statements that perform actions other than retrieving data, such as INSERT, UPDATE, DELETE, or other statements that modify the database.
 
 

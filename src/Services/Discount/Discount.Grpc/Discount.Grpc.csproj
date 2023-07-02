@@ -6,15 +6,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="Discount.Grpc.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<Protobuf Include="Protos\discount.proto" GrpcServices="Server" />
+	</ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Dapper" Version="2.0.143" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />
     <PackageReference Include="Npgsql" Version="7.0.4" />
