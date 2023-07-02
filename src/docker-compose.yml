@@ -16,6 +16,12 @@ services:
   catalogdb:
     image: mongo
 
+  discountdb:
+    image: postgres
+
+  pgadmin:
+    image: dpage/pgadmin4
+
   basketdb:
     image: redis:alpine  
     # alpine is lightweight
@@ -24,9 +30,18 @@ services:
     image: portainer/portainer-ce
 
 
+  discount.api:
+    image: ${DOCKER_REGISTRY-}discountapi
+    build:
+      context: .
+      dockerfile: Services/Discount/Discount.API/Dockerfile
+
 volumes:
   mongo_data:
   portainer_data:
+  postgres_data:
+  pgadmin_data:
+
   
 # context: defines either a path to a directory containing a Dockerfile, or a URL to a git repository. When the value supplied is a relative path, it MUST be interpreted as relative to the location of the Compose file. 
 
@@ -35,3 +50,4 @@ volumes:
 # DOCKER-REGISTRY can be set in environment variable of the image in docker-compose.override.yml. if not set then, the name is just the string after ${DOCKER_REGISTRY-}
 
 # container name is different from image name
+

@@ -1,0 +1,103 @@
+﻿C#:
+
+
+The first parameter of the extension method specifies the type being extended and should be preceded by the "this" keyword. This parameter indicates the instance on which the extension method is called. example in Discount.API/Extensions
+
+optional parameter can be specified by ? preceded by type of parameter
+
+
+
+Q. what is object initializer?
+
+using var command = new NpgsqlCommand
+{
+    Connection = (NpgsqlConnection)dbConnection
+};
+
+initialize Connection property of the NpgsqlCommand during object creation.
+
+
+Q. what is "using" directive?
+
+syntax 1:
+
+await using (var resource = new AsyncDisposableExample())
+{
+    // Use the resource
+}
+
+When the control leaves the block of the using statement, an acquired IDisposable instance is disposed.
+
+
+syntax 2:
+
+using StreamReader reader = File.OpenText(filePath);
+
+You can use a "using" declaration that doesn't require braces, in that case a local variable is disposed at the end of the scope in which it's declared. 
+
+
+
+
+
+Packages:
+
+Dapper
+
+NpgSQL
+
+
+
+Dapper:
+
+Dapper is an open-source object-relational mapping (ORM) library for .NET and .NET Core applications.
+
+Dapper allows you to execute raw SQL queries, map the results to objects, and execute stored procedures, among other things.
+
+Dapper adds extension methods like QueryAsync on the connection object NpgsqlConnection.
+
+ORM stands for Object Relational Mapping, meaning the entire database can be operated in terms of OO classes, Interfaces etc. ORM creates a "virtual database" in terms of classes and provides methods to work with those classes.
+
+Dapper handles the opening and closing of the connection automatically for you when you call its methods.
+
+
+
+NpgsqlConnection:
+
+ExecuteNonQuery: It allows you to execute a command against the database and obtain the number of rows affected by the operation, without returning any actual data.
+
+
+
+Program.cs:
+
+AddTransient: when NpgsqlConnection is registered with the AddTransient method, which means that a new instance will be created every time it is requested from the DI container. whenever an instance of MyController is created, a new instance of NpgsqlConnection will be injected. When an incoming HTTP request matches a route defined in your application, the framework identifies the associated controller and creates a new instance of it.
+
+
+Addscoped: When the NpgsqlConnection is registered with the AddScoped method, which means that the same instance will be used throughout the duration of a single request. Each time an HTTP request is made that involves MyController, the same instance of NpgsqlConnection will be provided.
+
+
+
+query into DB in pgadmin container:
+
+Database > DiscountDb > Schemas > Table, click on this in sidebar and go to tools > query tool at top nav 
+
+
+
+SQL:
+
+CREATE TABLE Coupon(Id SERIAL PRIMARY KEY NOT NULL, ProductName VARCHAR(24) NOT NULL, 
+					Description TEXT,
+                    Amount INT);
+
+SERIAL: a data type that stores a sequential integer, of the INT data type, that is automatically assigned by the database server when a new row is inserted.
+
+
+
+1. Why do i need to explicitly call the Open method in HostExtension but not call it when using dapper methods?
+
+dapper handles opening and closing the connection.
+
+2. what is the reason for name of ExecuteNonQuery method in NpgsqlConnection?
+
+The term "non-query" refers to SQL statements that perform actions other than retrieving data, such as INSERT, UPDATE, DELETE, or other statements that modify the database.
+
+
