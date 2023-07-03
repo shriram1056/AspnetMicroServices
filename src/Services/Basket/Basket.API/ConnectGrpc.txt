@@ -1,0 +1,5 @@
+right click Catalog.API solution, select "Add > Connected Service".
+
+after thats select grpc, set the .proto file destination and choose "Client". This generates a "Proto" folder with a proto file that is the exact copy of proto file in Discount.Grpc
+
+in UpdateBasket method in controller, we call Discount.Grpc's for every item in the basket. this create n request to GetDiscount of the Grpc for one UpdateBasket method if there are n items in basket. This is why Grpc is needed for faster communication.

@@ -1,4 +1,6 @@
-﻿Grpc is like a like REST but it uses Protocol Buffers (protobuf) serialization format and the HTTP/2 protocol
+﻿frequent backend microservice communication.
+
+Grpc is like a like REST but it uses Protocol Buffers (protobuf) serialization format and the HTTP/2 protocol
 
 
 remove HTTPS and modify HTTP:
@@ -67,6 +69,7 @@ Discount.Grpc.csproj:
 
 
 
+
 2. how to select if the proto should be used for client or server code generation?
 
 	right click discount.proto and select properties, set "Build Action" as "Protobuf compiler" we can select what code should be generated in "grpc stub classes" field:
@@ -74,6 +77,7 @@ Discount.Grpc.csproj:
 	Generate client code: This option allows you to control whether the client-side code should be generated. If enabled, the gRPC stub classes will be generated.
 
 	Generate server code: Similarly, this option controls the generation of server-side code if you have defined gRPC services on the server.
+
 
 
 
@@ -85,6 +89,8 @@ Discount.Grpc.csproj:
 
 	Field numbers 1 to 15 are reserved for fields that are expected to have frequent updates, and field numbers 16 to 2047 are reserved for fields that are less likely to change frequently.
 
+
+
 4. how to add proto files and have output available in intellisense?
 
 	add them in the .csproj
@@ -93,7 +99,21 @@ Discount.Grpc.csproj:
 		<Protobuf Include="Protos\discount.proto" GrpcServices="Server" />
 	</ItemGroup>
 
+
+
 5. compiled c# class from proto file?
 
 	build the project and the protobuf files will be compiled to C# files.
+
+
+
+6. why do only one proto file is used for grpc in connected services visual studio .net instead of multiple endpoints like rest api?
+
+	In the Connected Services feature for gRPC, you only have one proto file, as it defines the entire contract for the gRPC service.
+
+	If you have multiple gRPC services, each service will typically have its own separate proto file. In that case, you would add each gRPC service as a separate Connected Service, and each service would generate its own client code based on its respective proto file.
+
+	but you can add multiple gRPC services in one file, its just not efficient.
+
+
 

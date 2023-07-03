@@ -19,6 +19,9 @@ add package by right clicking Depenencies on the solution and selecting "Add nug
 right click solution, select properties, go to debug section and modify the URLS of launch profiles.
 
 
+right click solution, select "aspnetrun-microservices" solution, you'll see an option to create multiple launch projects at once
+
+
 
 PROGRAM.cs:
 

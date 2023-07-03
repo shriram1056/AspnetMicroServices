@@ -1,0 +1,1 @@
+Discount.Grpc is the main service. Discount.API is service made to validate the db connection and repo methods
