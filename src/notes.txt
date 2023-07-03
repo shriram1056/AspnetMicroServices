@@ -69,9 +69,23 @@ DOCKER:
 
 https://stackoverflow.com/questions/53332539/why-do-we-build-and-publish-as-two-steps-when-publish-also-builds
 
+By default, any service can reach any other service at that service’s name. 
+
+In general, containers are designed to run a single process or service.
+
+
 1. command to create and run the container?
 
 docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
+
+	 It is used to start the services defined in a Docker Compose configuration file. It creates and starts containers based on the images specified in the configuration.
+
+docker-compose -f docker-compose.yml -f docker-compose.override.yml up --build 
+ 
+	 When you are setting up your project for the first time or if you have made significant changes to your Dockerfile(s) or build context (the source code), using this command ensures that all the images are built with the latest changes before starting the services.
+
+	 It will rebuild the images with the updated dependencies before starting the services.
+
 
 -f: flag to specify the location of a Compose configuration file.
 
@@ -141,3 +155,35 @@ when working with MongoDB and the .NET driver, the driver automatically handles 
 10. why is the port of api container always 80?
 
 it is because that is the default container port in dockerfile.
+
+11. how does docker map container name to hostname or URL?
+
+Docker's built-in DNS server provides name resolution, mapping service names to IP addresses. This allows services to communicate with each other using the service name as the hostname.
+
+Hostnames is a human-readable identifier used to identify and locate a specific device within a network and is often associated with IP addresses, which are the numerical addresses used to identify devices on a network. Hostnames provide a more user-friendly way to refer to network devices compared to using IP addresses directly. 
+
+A URL is a specific type of Uniform Resource Identifier (URI) that provides the complete address and access method to locate a resource on the internet. It is a string of characters that specifies the protocol, hostname (or IP address), path, and optional query parameters necessary to access a specific resource. 
+
+12. How does EXPOSE work in Docker?
+
+EXPOSE 80 is used to specify that the container will listen on port 80. This suggests that the application running inside the container expects to receive incoming network requests on port 80.
+
+the placeholder {ServicePort} in launch profile will be replaced with the port number that you want to use to access the application. Since publishAllPorts is set to true, Docker will dynamically map the exposed port (in this case, port 80) to a random port on the host machine, if not specified which we have for all API.
+
+Therefore, the value of {ServicePort} in this scenario would be the dynamically assigned to that port on the host machine.
+
+https://github.com/microsoft/DockerTools/issues/326
+
+13. what is IP address and Port number?
+
+IP address identifies a machine in an IP network and is used to determine the destination of a data packet. 
+
+Port numbers identify a particular application or service on a system.
+
+14. How do services communicate with each other?
+
+Networked service-to-service communication uses the CONTAINER_PORT not the exposed HOST_PORT.
+
+By default docker-compose sets up a single network for your app. Each container for a service joins the default network and is both reachable by other containers on that network, and discoverable by them at a hostname identical to the container name.
+
+if the destination container has only one port exposed, Docker will route the request to that port by default.
