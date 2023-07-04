@@ -187,3 +187,5 @@ Networked service-to-service communication uses the CONTAINER_PORT not the expos
 By default docker-compose sets up a single network for your app. Each container for a service joins the default network and is both reachable by other containers on that network, and discoverable by them at a hostname identical to the container name.
 
 if the destination container has only one port exposed, Docker will route the request to that port by default.
+
+https://stackoverflow.com/questions/76607676/how-can-i-send-http-request-from-service-1-to-a-service-2-in-different-container?noredirect=1#comment135070255_76607676
