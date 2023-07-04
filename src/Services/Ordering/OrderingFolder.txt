@@ -1,3 +1,18 @@
-Ordering.Domain:
+Ordering.Domain, Ordering.Application and Ordering.Infrastructure:
 
 This is created from class library project template
+
+
+Add project reference:
+
+right click Dependencies and select "Add Project Reference"
+
+depends on (->)
+
+API -> Application and Infrastructure
+
+Infrastructure -> Application
+
+Application -> Domain
+
+Domain -> None
