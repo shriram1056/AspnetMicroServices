@@ -1,0 +1,3 @@
+Ordering.Domain:
+
+This is created from class library project template
