@@ -1,5 +1,11 @@
 ﻿Persistence/IAsyncRepository.cs
 
+
+
+This file is used in Infrastructure Folder. no matter what the ORM, this layer won't be affected. 
+
+
+
 where T : EntityBase, T is constrained to be a type derived from or implementing the EntityBase class or interface.
 
 
@@ -37,3 +43,8 @@ disableTracking: boolean flag indicating whether the retrieved entities should b
                                     1. 
 includeString:  list of lambda expressions representing the navigation properties to be included in the query. It allows eager loading of related entities.
 
+
+
+Persistence/IOrderRepository.cs
+
+This file
