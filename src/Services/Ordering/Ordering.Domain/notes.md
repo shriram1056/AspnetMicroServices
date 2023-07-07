@@ -1,6 +1,13 @@
 ﻿Ordering.Domain.Common
 
 
+
+Entities/Order.cs extends Common/EntityBase.
+
+Common/ValueObject.cs is not used.
+
+
+
 Value Objects:
 
 Value objects are objects that represent a concept or entity based solely on their attributes or values. They are typically immutable, meaning their values cannot be changed after creation. The equality of value objects is determined by the equality of their attribute values.
@@ -24,5 +31,8 @@ The main goals of Domain-Driven Design include:
 2. Domain Modeling: DDD encourages the creation of a domain model that represents the core concepts, relationships, and behavior of the business domain. The domain model captures the essential elements of the problem space and serves as a guide for designing the software solution.
 
 3. Bounded Contexts: A bounded context is a well-defined boundary that encapsulates a specific part of the domain model along with its associated language, rules, and context. DDD recognizes that complex domains may have different contexts with their own models and constraints. 
+
+
+
 
 
