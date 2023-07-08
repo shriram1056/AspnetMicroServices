@@ -1,1 +1,12 @@
-﻿we need a DTO object for commands and query as we want to seperate them. They are exactly same or slightly different from data model and Idk why this is a thing.
+﻿we need a DTO object for commands and query as we want to seperate them. They are exactly same or slightly different from data model and Idk why this is a thing. So basically we map the DTO to  data model and vise-versa.
+
+Mediator Pattern:
+
+one mediator mediates between incoming requests, implementors of IRequest from MediatR, and sending them to correct IRequestHandler, again MediatR shit.
+
+IRequesthandler has Handle method which handles the incoming method.
+
+
+Request Pipeline:
+
+Caller -> Request -> MediatR -> pre processor behavior -> Handler -> post processor behavior -> Response

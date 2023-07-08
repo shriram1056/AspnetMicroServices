@@ -47,4 +47,4 @@ includeString:  list of lambda expressions representing the navigation propertie
 
 Persistence/IOrderRepository.cs
 
-This file
+This file implement IAsyncRepo
