@@ -9,6 +9,11 @@ When you send a POST request to your API endpoint with a JSON payload containing
 A nameof function produces the name of a variable, type, or member as the string constant
 
 
+AUTO MAPPER:
+
+use Assembly.GetExecutingAssembly() to load assemblies in only the current web api
+
+
 
 VISUAL STUDIO:
 

@@ -4,6 +4,7 @@ using Discount.Grpc.Repositories;
 using Discount.Grpc.Services;
 using Npgsql;
 using System.Data;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +18,7 @@ builder.Services.AddTransient<IDbConnection>((sp) => new NpgsqlConnection(builde
 builder.Services.AddScoped<IDiscountRepository, DiscountRepository>();
 
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 
 var app = builder.Build();

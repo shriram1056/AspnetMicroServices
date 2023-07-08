@@ -1,0 +1,1 @@
+﻿we need a DTO object for commands and query as we want to seperate them. They are exactly same or slightly different from data model and Idk why this is a thing.
