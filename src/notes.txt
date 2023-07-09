@@ -8,6 +8,11 @@ When you send a POST request to your API endpoint with a JSON payload containing
 
 A nameof function produces the name of a variable, type, or member as the string constant
 
+ {get; set; } is a shorthand syntax for automatically implementing both the get and set accessors of a property. 
+
+ {get;} is read only property.
+
+
 
 AUTO MAPPER:
 

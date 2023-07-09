@@ -10,3 +10,20 @@ Microsoft.Extensions.Logging.Abstractions
 
 
 The main benefit of using a Microsoft.Extensions.Logging.Abstractions is improved flexibility and maintainability. It allows you to switch or upgrade logging frameworks without making significant changes to your codebase. For example, if you initially use a logging library like Log4Net and later decide to switch to Serilog, you can easily do so by changing the configuration without modifying your code that uses the logging abstraction.
+
+
+
+Behaviours:
+
+validators implement "AbstractValidator"
+
+IRequestHandler<implementation of IRequest> this how request and handler are mapped.
+
+services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
+services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>))
+
+UnhandledExceptionBehaviour before ValidationBehaviour, there is await in UnhandledExceptionBehaviour that triggers ValidationBehaviour and if there is any error it'll catch
+
+By default IPipelineBehavior comes before the handlers
+
+Behaviour are injected with IValidator objects (UpdateOrderCommandValidation) that are created for handler.
