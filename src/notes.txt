@@ -18,6 +18,17 @@ AUTO MAPPER:
 
 use Assembly.GetExecutingAssembly() to load assemblies in only the current web api
 
+register layers as service in Ordering.API:
+
+builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices(Configuration);
+
+
+
+EntityFrameworkCore:
+
+override SaveChangesAsync method to add default values for some fields Ordering.Infrastructure/Persistence/OrderContext. EntityState tracks the status of entity in efcore like if it is modified, added. TEntity.AddRange() helps you put the entity in tracker
+
 
 
 VISUAL STUDIO:
@@ -39,6 +50,9 @@ When a service is registered with the AddScoped method, a new instance of that s
 
 get values in appsettings.json by configuration.GetValue<string>("DatabaseSettings:DatabaseName")
 
+services.Configure<EmailSettings>(c => configuration.GetSection("EmailSettings")); // swap EmailSettings with email settings from config
+
+  services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>)); //to register IAsyncRepository<T> with RepositoryBase<T> 
 
 
 AddTransient: when NpgsqlConnection is registered with the AddTransient method, which means that a new instance will be created every time it is requested from the DI container. whenever an instance of MyController is created, a new instance of NpgsqlConnection will be injected. When an incoming HTTP request matches a route defined in your application, the framework identifies the associated controller and creates a new instance of it.
