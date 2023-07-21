@@ -26,6 +26,9 @@ services:
     image: redis:alpine  
     # alpine is lightweight
 
+  orderdb:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+  
   portainer:
     image: portainer/portainer-ce
 
