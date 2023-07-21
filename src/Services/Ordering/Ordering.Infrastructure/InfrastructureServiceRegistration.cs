@@ -16,6 +16,7 @@ namespace Ordering.Infrastructure
         {
             services.AddDbContext<OrderContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("OrderingConnectionString")));
+            // comes from Ordering.API when you AddInfrastructureServices in service container
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>)); //to register IAsyncRepository<T> with RepositoryBase<T> 
             services.AddScoped<IOrderRepository, OrderRepository>();

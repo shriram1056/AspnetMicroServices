@@ -1,0 +1,5 @@
+﻿Microsoft.EntityFrameworkCore.Tools:
+
+give ef command line to work with dbs
+
+ Action<T1, T2> : accept 2 parameter and doesn't return

@@ -12,6 +12,8 @@ A nameof function produces the name of a variable, type, or member as the string
 
  {get;} is read only property.
 
+ Action<T1, T2> : accept 2 parameter and doesn't return
+
 
 
 AUTO MAPPER:
@@ -25,9 +27,45 @@ builder.Services.AddInfrastructureServices(Configuration);
 
 
 
+Assembly:
+
+In .NET, assembly refers to a compiled unit of code that contains intermediate language (IL) instructions and metadata. It is the fundamental building block of a .NET application. An assembly can be a DLL (Dynamic Link Library) or an EXE (Executable) file.
+
+
+Project to Project ref:
+
+lets use things from the added reference.
+
+
+
 EntityFrameworkCore:
 
 override SaveChangesAsync method to add default values for some fields Ordering.Infrastructure/Persistence/OrderContext. EntityState tracks the status of entity in efcore like if it is modified, added. TEntity.AddRange() helps you put the entity in tracker
+
+
+
+Migrations:
+
+database migrations basically track granular changes to your database schema (and sometimes to your data as well). These granular changes are typically reflected as separate scripted files.
+
+Migrations are helpful because they allow database schemas to evolve as requirements change. They help developers plan, validate, and safely apply schema changes to their environments.
+
+
+
+Startup project:
+
+the project that shows up in the play button area by default.
+
+
+
+Method Chaining:
+
+var services = new ServiceCollection();
+services
+    .AddService1()
+    .AddService2();
+
+By returning the services object in each extension method, the subsequent method call can be made on the returned object.
 
 
 

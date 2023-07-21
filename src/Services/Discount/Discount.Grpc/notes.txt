@@ -7,6 +7,19 @@ optional parameter can be specified by ? preceded by type of parameter
 
 
 
+
+Method Chaining:
+
+var services = new ServiceCollection();
+services
+    .AddService1()
+    .AddService2();
+
+By returning the services object in each extension method, the subsequent method call can be made on the returned object.
+
+
+
+
 Q. what is object initializer?
 
 using var command = new NpgsqlCommand

@@ -1,3 +1,29 @@
+set Ordering.API as startUp project 
+
+
+
+register layers as service in Ordering.API (migration need connection string from the startup project so without this no migration):
+
+builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices(Configuration);
+
+
+
+Migraton:
+
+the migration have --startup-project parameter you can specify the project which contains your connection string (in app.config e.g.).
+
+migration need connection string to get migration history.
+
+You can have your migrations in a seperate project (which doesn't contain the connection string).
+
+when you run the Add-Migration command in the Ordering.Infrastructure project, it will use the connection string provided during service registration to create the migration based on the configured database connection.
+
+
+
+Entity Framework Core Tools are a set of command-line tools provided by Microsoft 
+
+
 Ordering.Domain, Ordering.Application and Ordering.Infrastructure:
 
 This is created from class library project template

@@ -37,7 +37,7 @@ services:
     ports:
       - "8000:80"
   # the MongoDB client driver will use the default port for MongoDB, which is 27017.
-  
+
   basket.api:
     container_name: basket.api
     environment:
